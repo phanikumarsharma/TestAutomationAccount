@@ -22,6 +22,15 @@ Import-Module AzureRM.Automation
     $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
     Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
     Select-AzureRmSubscription -SubscriptionId $subsriptionid
+    $EnvironmentName = "AzureCloud"
+$Securepass=ConvertTo-SecureString -String `$Password -AsPlainText -Force
+$Azurecred=New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList(`$Username, `$Securepass)
+$login=Login-AzureRmAccount -Credential `$Azurecred -SubscriptionId `$SubscriptionId
+$CredentialAssetName = 'DefaultAzureCredential'
 
+    #Get the credential with the above name from the Automation Asset store
+    $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
+   login-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
+    Select-AzureRmSubscription -SubscriptionId $subsriptionid
 New-AzureRmAppServicePlan -Name $appplan -Location $Location -ResourceGroupName $ResourceGroupName -Tier Free
 New-AzureRmWebApp -Name $webapp -AppServicePlan $appplan -ResourceGroupName $ResourceGroupName -Location $Location
