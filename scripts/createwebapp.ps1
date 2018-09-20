@@ -5,18 +5,11 @@ $Username = Get-AutomationVariable -Name 'Username'
 $Password = Get-AutomationVariable -Name 'Password'
 $appplan =  Get-AutomationVariable -Name 'appplan'
 $webapp =  Get-AutomationVariable -Name 'webapp'
-
-Import-Module AzureRM.Resources
-Import-Module AzureRM.Profile
-Import-Module AzureRM.Websites
-Import-Module Azure
-Import-Module AzureRM.Automation
-
     $CredentialAssetName = 'DefaultAzureCredential'
 
     #Get the credential with the above name from the Automation Asset store
     $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
-    Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
+    Login-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
     Select-AzureRmSubscription -SubscriptionId $subsriptionid
     $EnvironmentName = "AzureCloud"
 $Securepass=ConvertTo-SecureString -String $Password -AsPlainText -Force
