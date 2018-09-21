@@ -261,11 +261,14 @@ Param(
     [string] `$ResourceGroupName
  
 )
+
 Import-Module AzureRM.profile
 Import-Module AzureRM.Automation
+
 `$Securepass=ConvertTo-SecureString -String `$Password -AsPlainText -Force
 `$Azurecred=New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList(`$Username, `$Securepass)
 `$login=Login-AzureRmAccount -Credential `$Azurecred -SubscriptionId `$SubscriptionId
+
 Remove-AzureRmAutomationAccount -Name "msftsaas-autoAccount" -ResourceGroupName `$ResourceGroupName -Force 
 "@| Out-File -FilePath RemoveAccount:\RemoveAccount.ps1 -Force
 
