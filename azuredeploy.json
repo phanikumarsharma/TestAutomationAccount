@@ -38,8 +38,8 @@
 
         "credentialName": "DefaultAzureCredential",
         "runbookName": "msftsaasbook",
-        "baseURL": "https://raw.githubusercontent.com/Azure/RDS-Templates/master/rdmi-peopletech/msft-rdmi-saas-offering/scripts/",
-        "scriptUri": "https://raw.githubusercontent.com/Azure/RDS-Templates/master/rdmi-peopletech/msft-rdmi-saas-offering/scripts/New-RdmiMgmtSetup.ps1",
+        "baseURL": "https://raw.githubusercontent.com/phanikumarsharma/TestAutomationAccount/master/scripts/",
+        "scriptUri": "https://raw.githubusercontent.com/phanikumarsharma/TestAutomationAccount/master/scripts/New-RdmiMgmtSetup.ps1",
         "fileURI": "[concat(variables('baseURL'),'/msft-rdmi-saas-offering.zip')]",
 
         "sku": "Free",
