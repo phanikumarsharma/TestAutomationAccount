@@ -20,16 +20,22 @@ Import-Module AzureRM.Automation
     $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
     Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
     Select-AzureRmSubscription -SubscriptionId $subsriptionid
+    <#$ServicePrincipalConnectionName = "AzureRunAsConnection"
+    $SPConnection = Get-AutomationConnection -Name $ServicePrincipalConnectionName   
+        Add-AzureRmAccount -ServicePrincipal `
+        -TenantId $SPConnection.TenantId `
+        -ApplicationId $SPConnection.ApplicationId `
+        -CertificateThumbprint $SPConnection.CertificateThumbprint | Write-Verbose
+       #> 
 
     $EnvironmentName = "AzureCloud"
     $AppServicePlan = "msft-rdmi-saas-$((get-date).ToString("ddMMyyyyhhmm"))"
     $WebApp = "RDmiMgmtWeb-$((get-date).ToString("ddMMyyyyhhmm"))"
+    $ApiApp = "RDmiMgmtApi-$((get-date).ToString("ddMMyyyyhhmm"))"
+
 
 try
 {
-    # Copy the files from github to VM
-    Import-Module AzureRM.Profile
-    Import-Module AzureRM.Resources
 
     ## RESOURCE GROUP ##
         Add-AzureRmAccount -Environment "AzureCloud" -Credential $Cred
@@ -64,6 +70,15 @@ try
                 New-AzureRmWebApp -Name $WebApp -Location $Location -AppServicePlan $AppServicePlan -ResourceGroupName $ResourceGroupName
                 Write-Output "WebApp with name $WebApp has been created"
 
+                ## CREATING API-APP ##
+
+                # Create an api app
+            
+                Write-Output "Creating a ApiApp in resource group  $ResourceGroupName ...";
+                $ServerFarmId = $AppPlan.Id
+                $propertiesobject = @{"ServerFarmId"= $ServerFarmId}
+                New-AzureRmResource -Location $Location -ResourceGroupName $ResourceGroupName -ResourceType Microsoft.Web/sites -ResourceName $ApiApp -Kind 'api' -ApiVersion 2016-08-01 -PropertyObject $propertiesobject -Force
+                Write-Output "ApiApp with name $ApiApp has been created"
             }
             catch [Exception]
             {
@@ -71,10 +86,12 @@ try
             }
         
         }
-
 }
 
 catch [Exception]
 {
     Write-Output $_.Exception.Message
 }
+
+
+   
