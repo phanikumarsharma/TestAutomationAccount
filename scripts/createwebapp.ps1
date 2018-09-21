@@ -69,16 +69,6 @@ try
                 Write-Output "Creating a WebApp in resource group  $ResourceGroupName ...";
                 New-AzureRmWebApp -Name $WebApp -Location $Location -AppServicePlan $AppServicePlan -ResourceGroupName $ResourceGroupName
                 Write-Output "WebApp with name $WebApp has been created"
-
-                ## CREATING API-APP ##
-
-                # Create an api app
-            
-                Write-Output "Creating a ApiApp in resource group  $ResourceGroupName ...";
-                $ServerFarmId = $AppPlan.Id
-                $propertiesobject = @{"ServerFarmId"= $ServerFarmId}
-                New-AzureRmResource -Location $Location -ResourceGroupName $ResourceGroupName -ResourceType Microsoft.Web/sites -ResourceName $ApiApp -Kind 'api' -ApiVersion 2016-08-01 -PropertyObject $propertiesobject -Force
-                Write-Output "ApiApp with name $ApiApp has been created"
             }
             catch [Exception]
             {
