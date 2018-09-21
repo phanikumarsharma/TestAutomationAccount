@@ -1,20 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @phanikumarsharma Sign out
-11
-7 25 Azure/RDS-Templates
- Code  Issues 30  Pull requests 3  Projects 0  Wiki  Insights
-RDS-Templates/rdmi-peopletech/msft-rdmi-saas-offering/scripts/New-RdmiMgmtSetup.ps1
-0df0574  21 days ago
-@susmitapattanaik susmitapattanaik modified arm template and script and published files
-     
-304 lines (236 sloc)  14.5 KB
 $subsriptionid = Get-AutomationVariable -Name 'subsriptionid'
 $ResourceGroupName = Get-AutomationVariable -Name 'ResourceGroupName'
 $Location = Get-AutomationVariable -Name 'Location'
