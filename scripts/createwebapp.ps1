@@ -3,6 +3,12 @@ $ResourceGroupName = Get-AutomationVariable -Name 'ResourceGroupName'
 $Location = Get-AutomationVariable -Name 'Location'
 $Username = Get-AutomationVariable -Name 'Username'
 $Password = Get-AutomationVariable -Name 'Password'
+$fileURI = Get-AutomationVariable -Name 'fileURI'
+Invoke-WebRequest -Uri $fileURI -OutFile "C:\msft-rdmi-saas-offering.zip"
+New-Item -Path "C:\moduleszip" -ItemType directory -Force -ErrorAction SilentlyContinue
+Expand-Archive "C:\moduleszip.zip" -DestinationPath "C:\moduleszip" -ErrorAction SilentlyContinue
+$AzureModulesPath = Get-ChildItem -Path "C:\moduleszip\moduleszip"| Where-Object {$_.FullName -match 'AzureModules.zip'}
+Expand-Archive $AzureModulesPath.fullname -DestinationPath 'C:\Modules\Global' -ErrorAction SilentlyContinue
 
 Import-Module AzureRM.Resources
 Import-Module AzureRM.Profile
