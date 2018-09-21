@@ -2,6 +2,24 @@
     "$schema": "http://schemas.microsoft.org/azure/deploymentTemplate?api-version=2015-01-01-preview#",
     "contentVersion": "1.0",
     "parameters": {
+      "ApplicationID": {
+            "type": "String",
+            "metadata": {
+                "description": "Application ID / Client ID of the infrastructure.  Ex: 574ee204-xx91-4ac5-xx7a-5a6a4e2784e9"
+            }
+        },
+        "RDBrokerURL": {
+            "type": "String",
+            "metadata": {
+                "description": "RDBroker URL of the infrastructure.   Ex: https://rdbroker-uiyyft4gnswme.azurewebsites.net"
+            }
+        },
+        "ResourceURL": {
+            "type": "String",
+            "metadata": {
+                "description": "Resource URL of the infrastructure.  Ex: https://ContosoVM.onmicrosoft.com/RDInframsftrdmisaasf658465e2b4948fe85e"
+            }
+        },
         "AzureLoginID": {
             "type": "String",
             "metadata": {
@@ -16,12 +34,14 @@
         }
     },
     "variables": {
-        "accountName": "webapp-autoAccount",
+        "accountName": "msftsaas-autoAccount",
+
         "credentialName": "DefaultAzureCredential",
-        "runbookName": "aebapprunbook",
-        "baseURL": "https://raw.githubusercontent.com/phanikumarsharma/TestAutomationAccount/master/scripts/",
-        "scriptUri": "https://raw.githubusercontent.com/phanikumarsharma/TestAutomationAccount/master/scripts/createwebapp.ps1",
-        "fileURI": "[concat(variables('baseURL'),'/moduleszip.zip')]",
+        "runbookName": "msftsaasbook",
+        "baseURL": "https://raw.githubusercontent.com/Azure/RDS-Templates/master/rdmi-peopletech/msft-rdmi-saas-offering/scripts/",
+        "scriptUri": "https://raw.githubusercontent.com/Azure/RDS-Templates/master/rdmi-peopletech/msft-rdmi-saas-offering/scripts/New-RdmiMgmtSetup.ps1",
+        "fileURI": "[concat(variables('baseURL'),'/msft-rdmi-saas-offering.zip')]",
+
         "sku": "Free",
         "automationVariables": [
             {
@@ -43,9 +63,25 @@
             {
                 "name": "Location",
                 "value": "[concat('\"',resourceGroup().location,'\"')]"
+            },
+            {
+                "name": "ApplicationID",
+                "value": "[concat('\"',parameters('ApplicationID'),'\"')]"
+            },
+            {
+                "name": "RDBrokerURL",
+                "value": "[concat('\"',parameters('RDBrokerURL'),'\"')]"
+            },
+            {
+                "name": "ResourceURL",
+                "value": "[concat('\"',parameters('ResourceURL'),'\"')]"
+            },
+            {
+                "name": "fileURI",
+                "value": "[concat('\"',variables('baseURL'),'/msft-rdmi-saas-offering.zip','\"')]"
             }
         ],
-	"uniqueBase": "[toLower(uniqueString(variables('accountName'), resourceGroup().id, deployment().name))]",
+	"uniqueBase": "[toLower(uniqueString(parameters('ResourceURL'), resourceGroup().id, deployment().name))]",
     "temp": "[concat(variables('uniqueBase') , variables('uniqueBase'), substring(variables('uniqueBase'), 0, 10))]",
     "g": "[replace(variables('temp'), 'g', '0')]",
     "h": "[replace(variables('g'), 'h', '1')]",
