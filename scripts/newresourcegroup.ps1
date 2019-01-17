@@ -9,8 +9,8 @@ $ApplicationId = Get-AutomationVariable -Name 'ApplicationId'
 $AppSecretKey = Get-AutomationVariable -Name 'AppSecretKey'
 
 Select-AzureRmSubscription -SubscriptionId $subscriptionid
-$securePassword = $AppSecretKey | ConvertTo-SecureString -AsPlainText -Force
-$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
+$Securepass=ConvertTo-SecureString -String $AppSecretKey -AsPlainText -Force
+$Credentials=New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList($ApplicationId, $Securepass)
 Login-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $TenantId
 
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
