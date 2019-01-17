@@ -11,5 +11,5 @@ $CredentialAssetName = 'DefaultAzureCredential'
 #Get the credential with the above name from the Automation Asset store
 $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
 Login-AzureRmAccount -Credential $Cred
-Select-AzureRmSubscription -SubscriptionId $subsriptionid
+Select-AzureRmSubscription -SubscriptionId $subscriptionid
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
