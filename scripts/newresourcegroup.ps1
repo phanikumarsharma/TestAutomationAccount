@@ -11,8 +11,8 @@ $appSecretKey = Get-AutomationVariable -Name 'appSecretKey'
 $CredentialAssetName = 'DefaultAzureCredential'
 #Get the credential with the above name from the Automation Asset store
 $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
-Login-AzureRmAccount -Credential $Cred
+Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
 
-Select-AzureRmSubscription -SubscriptionId $subscriptionId -Tenant $tenantId
+Select-AzureRmSubscription -SubscriptionId $subscriptionId 
 
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
