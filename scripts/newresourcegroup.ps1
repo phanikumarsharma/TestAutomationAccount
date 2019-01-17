@@ -1,17 +1,18 @@
 Import-Module AzureRM.profile
 Import-Module AzureRM.Automation
 
-$TenantId = Get-AutomationVariable -Name 'TenantId'
-$subscriptionid = Get-AutomationVariable -Name 'subscriptionid'
-$ResourceGroupName = Get-AutomationVariable -Name 'resourceGroupName'
+$tenantId = Get-AutomationVariable -Name 'tenantId'
+$subscriptionId = Get-AutomationVariable -Name 'subscriptionId'
+$resourceGroupName = Get-AutomationVariable -Name 'resourceGroupName'
 $Location = Get-AutomationVariable -Name 'Location'
-$ApplicationId = Get-AutomationVariable -Name 'ApplicationId'
-$AppSecretKey = Get-AutomationVariable -Name 'AppSecretKey'
+$applicationId = Get-AutomationVariable -Name 'applicationId'
+$appSecretKey = Get-AutomationVariable -Name 'appSecretKey'
 
 $CredentialAssetName = 'DefaultAzureCredential'
 #Get the credential with the above name from the Automation Asset store
 $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
 Login-AzureRmAccount -Credential $Cred
-Select-AzureRmSubscription -SubscriptionId $subscriptionid
+
+Select-AzureRmSubscription -SubscriptionId $subscriptionId -Tenant $tenantId
 
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
