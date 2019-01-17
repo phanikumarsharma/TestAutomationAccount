@@ -4,4 +4,9 @@ $Location = Get-AutomationVariable -Name 'Location'
 $Username = Get-AutomationVariable -Name 'Username'
 $Password = Get-AutomationVariable -Name 'Password'
 
+$CredentialAssetName = 'DefaultAzureCredential'
+#Get the credential with the above name from the Automation Asset store
+$Cred = Get-AutomationPSCredential -Name $CredentialAssetName
+Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
+Select-AzureRmSubscription -SubscriptionId $subsriptionid
 New-AzureRmResourceGroup -Name RG01 -Location "South Central US"
