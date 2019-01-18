@@ -13,6 +13,9 @@ $CredentialAssetName = 'DefaultAzureCredential'
 $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
 Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
 
+$securePassword = $appSecretKey | ConvertTo-SecureString -AsPlainText -Force
+$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ($applicationId, $appSecretKey)
+Login-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
 Select-AzureRmSubscription -SubscriptionId $subscriptionId 
 
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
