@@ -7,6 +7,24 @@ $resourceGroupName = Get-AutomationVariable -Name 'resourceGroupName'
 $Location = Get-AutomationVariable -Name 'Location'
 $applicationId = Get-AutomationVariable -Name 'applicationId'
 $appSecretKey = Get-AutomationVariable -Name 'appSecretKey'
+$connectionAssetName = "AzureRunAsConnection"
+$conn = Get-AutomationConnection -Name $ConnectionAssetName
+Add-AzureRmAccount -ServicePrincipal -Tenant $conn.TenantID -ApplicationId $conn.ApplicationId -CertificateThumbprint $conn.CertificateThumbprint -ErrorAction Stop | Write-Verbose
+Set-AzureRmContext -SubscriptionId $conn.SubscriptionId -ErrorAction Stop | Write-Verbose
+
+
+
+
+<#
+Import-Module AzureRM.profile
+Import-Module AzureRM.Automation
+
+$tenantId = Get-AutomationVariable -Name 'tenantId'
+$subscriptionId = Get-AutomationVariable -Name 'subscriptionId'
+$resourceGroupName = Get-AutomationVariable -Name 'resourceGroupName'
+$Location = Get-AutomationVariable -Name 'Location'
+$applicationId = Get-AutomationVariable -Name 'applicationId'
+$appSecretKey = Get-AutomationVariable -Name 'appSecretKey'
 
 $CredentialAssetName = 'DefaultAzureCredential'
 #Get the credential with the above name from the Automation Asset store
@@ -19,3 +37,4 @@ Login-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenant
 Select-AzureRmSubscription -SubscriptionId $subscriptionId 
 
 New-AzureRmResourceGroup -Name "RG01" -Location "South Central US"
+#>
