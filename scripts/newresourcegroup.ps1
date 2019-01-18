@@ -1,4 +1,23 @@
-Import-Module AzureRM.profile
+New-Item -Path "C:\msft-rdmi-saas-offering" -ItemType directory -Force -ErrorAction SilentlyContinue
+Import-Module AzureRM.Resources
+Import-Module AzureRM.Profile
+Import-Module AzureRM.Websites
+Import-Module Azure
+Import-Module AzureRM.Automation
+Import-Module AzureAD
+
+    Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope Process -Force -Confirm:$false
+    Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine -Force -Confirm:$false
+    Get-ExecutionPolicy -List
+    #The name of the Automation Credential Asset this runbook will use to authenticate to Azure.
+    $CredentialAssetName = 'DefaultAzureCredential'
+
+    #Get the credential with the above name from the Automation Asset store
+    $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
+    Add-AzureRmAccount -Environment 'AzureCloud' -Credential $Cred
+
+
+<#Import-Module AzureRM.profile
 Import-Module AzureRM.Automation
 
 $tenantId = Get-AutomationVariable -Name 'tenantId'
@@ -11,7 +30,7 @@ $connectionAssetName = "AzureRunAsConnection"
 $conn = Get-AutomationConnection -Name $ConnectionAssetName
 Add-AzureRmAccount -ServicePrincipal -Tenant $conn.TenantID -ApplicationId $conn.ApplicationId -CertificateThumbprint $conn.CertificateThumbprint -ErrorAction Stop | Write-Verbose
 Set-AzureRmContext -SubscriptionId $conn.SubscriptionId -ErrorAction Stop | Write-Verbose
-
+#>
 
 
 
