@@ -14,4 +14,6 @@ $userPassword = ConvertTo-SecureString -String $securePassword -AsPlainText -For
 $userCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $userPassword
 Add-AzureRmAccount -TenantId $tenantid -ServicePrincipal -SubscriptionId $subscriptionId -Credential $userCredential
 
+Get-AzureRmResourceGroup
+
  
