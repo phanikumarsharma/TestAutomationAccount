@@ -4,7 +4,6 @@ $resourceGroupName = Get-AutomationVariable -Name 'resourceGroupName'
 $Location = Get-AutomationVariable -Name 'Location'
 $accountName = Get-AutomationVariable -Name 'accountName'
 $applicationDisplayName = Get-AutomationVariable -Name 'applicationDisplayName'
-$CertPassword = Get-AutomationVariable -Name 'SelfSignedCertPlainPassword'
 $applicationId = Get-AutomationVariable -Name 'applicationId'
 $appSecretKey = Get-AutomationVariable -Name 'appSecretKey'
 $securePassword = $appSecretKey | ConvertTo-SecureString -AsPlainText -Force
